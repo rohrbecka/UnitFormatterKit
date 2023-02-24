@@ -30,11 +30,11 @@ public class UnitFormatter: NumberFormatter {
 
 
 
-    override public func string(for obj: Any?) -> String {
+    override public func string(for obj: Any?) -> String? {
         if let number = obj as? NSNumber {
-            return string(from: number) ?? ""
+            return string(from: number)
         } else {
-            return ""
+            return nil
         }
     }
 
@@ -47,7 +47,7 @@ public class UnitFormatter: NumberFormatter {
         return true
     }
 
-    
+
 
     override public func string(from number: NSNumber) -> String? {
         guard let numberString = super.string(from: number) else {
