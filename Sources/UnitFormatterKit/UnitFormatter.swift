@@ -56,16 +56,16 @@ public class UnitFormatter: NumberFormatter {
 
 
 
-    override public func string(from number: NSNumber) -> String? {
-        guard let numberString = super.string(from: number) else {
-            return nil
-        }
-        if let unit {
-            return numberString + paddingString + unit
-        } else {
-            return numberString
-        }
-    }
+//    override public func string(from number: NSNumber) -> String? {
+//        guard let numberString = super.string(from: number) else {
+//            return nil
+//        }
+//        if let unit {
+//            return numberString + paddingString + unit
+//        } else {
+//            return numberString
+//        }
+//    }
 
 
 
