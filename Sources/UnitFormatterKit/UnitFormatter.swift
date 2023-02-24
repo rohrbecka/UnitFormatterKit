@@ -32,7 +32,14 @@ public class UnitFormatter: NumberFormatter {
 
     override public func string(for obj: Any?) -> String? {
         if let number = obj as? NSNumber {
-            return string(from: number)
+            guard let numberString = super.string(for: number) else {
+                return nil
+            }
+            if let unit {
+                return numberString + paddingString + unit
+            } else {
+                return numberString
+            }
         } else {
             return nil
         }
