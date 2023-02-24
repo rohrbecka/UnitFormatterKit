@@ -30,12 +30,31 @@ public class UnitFormatter: NumberFormatter {
 
 
 
+    override public func string(for obj: Any?) -> String {
+        if let number = obj as? NSNumber {
+            return string(from: number) ?? ""
+        } else {
+            return ""
+        }
+    }
+
+
+
+    override public func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
+                                        for string: String,
+                                        errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+        obj?.pointee = number(from: string)
+        return true
+    }
+
+    
+
     override public func string(from number: NSNumber) -> String? {
         guard let numberString = super.string(from: number) else {
             return nil
         }
         if let unit {
-            return numberString + " " + unit
+            return numberString + paddingString + unit
         } else {
             return numberString
         }
