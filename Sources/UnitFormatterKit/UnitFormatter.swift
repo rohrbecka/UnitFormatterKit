@@ -31,6 +31,7 @@ public class UnitFormatter: NumberFormatter {
 
 
     override public func string(for obj: Any?) -> String? {
+        print("Formatting Number")
         if let number = obj as? NSNumber {
             guard let numberString = super.string(for: number) else {
                 return nil
@@ -50,26 +51,20 @@ public class UnitFormatter: NumberFormatter {
     override public func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?,
                                         for string: String,
                                         errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
-        obj?.pointee = number(from: string)
-        return true
+        if let result = number(fromFullString: string) {
+            obj?.pointee = result
+            return true
+        } else {
+            return false
+        }
     }
 
 
 
-//    override public func string(from number: NSNumber) -> String? {
-//        guard let numberString = super.string(from: number) else {
-//            return nil
-//        }
-//        if let unit {
-//            return numberString + paddingString + unit
-//        } else {
-//            return numberString
-//        }
-//    }
-
-
-
-    override public func number(from string: String) -> NSNumber? {
+    /// Converts the given String into a  NSNumber.
+    ///
+    /// If the process fails, `nil` is returned.
+    private func number(fromFullString string: String) -> NSNumber? {
         let numberCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: ".,\u{066b}"))
         let numberString = string.compactMap { ch in
             let charset = CharacterSet(charactersIn: String(ch))
@@ -79,6 +74,29 @@ public class UnitFormatter: NumberFormatter {
                 return nil
             }
         }
-        return super.number(from: String(numberString))
+        var returnValue: AnyObject?
+        super.getObjectValue(&returnValue,
+                             for: String(numberString),
+                             errorDescription: nil)
+        if let value = returnValue as? NSNumber {
+            return value
+        } else {
+            return nil
+        }
+    }
+
+
+
+    /// Copies the ``UnitFormatter``.
+    ///
+    /// This overrides the ``NumberFormatter``s `copy()` method to copy also the additional properties
+    /// of ``UnitFormatter``.
+    override public func copy() -> Any {
+        let newObject = super.copy()
+        if let newObject = newObject as? Self {
+            newObject.unit = self.unit
+            newObject.paddingString = self.paddingString
+        }
+        return newObject
     }
 }
