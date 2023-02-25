@@ -31,7 +31,6 @@ public class UnitFormatter: NumberFormatter {
 
 
     override public func string(for obj: Any?) -> String? {
-        print("Formatting Number")
         if let number = obj as? NSNumber {
             guard let numberString = super.string(for: number) else {
                 return nil
