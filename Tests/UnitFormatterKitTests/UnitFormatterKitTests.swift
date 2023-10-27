@@ -15,8 +15,6 @@ final class UnitFormatterTests: XCTestCase {
         return formatter
     }()
 
-
-
     let unitFormatter: UnitFormatter = {
         let formatter = UnitFormatter()
         formatter.minimumFractionDigits = 0
@@ -25,12 +23,15 @@ final class UnitFormatterTests: XCTestCase {
         return formatter
     }()
 
-
-
     func testUnitFormatter() throws {
         XCTAssertEqual(unitFormatter.string(from: NSNumber(1.23)), "1,23 mm")
         XCTAssertEqual(unitFormatter.number(from: "1,34 mm")?.doubleValue, 1.34)
 
         XCTAssertEqual(unitFormatter.number(from: "1,34")?.doubleValue , 1.34)
+    }
+
+    func testUnitFormatterForNegativeNumbers () throws {
+        XCTAssertEqual(unitFormatter.string(from: NSNumber(-1.23)), "-1,23 mm")
+        XCTAssertEqual(unitFormatter.number(from: "-1,2345")?.doubleValue, -1.2345)
     }
 }

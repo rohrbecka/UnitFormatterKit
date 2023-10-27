@@ -1,6 +1,6 @@
 import Foundation
 
-/// A NumberFormatter, which is better at handling units as the original.
+/// A ``NumberFormatter`, which is better at handling units as the original.
 ///
 /// ``Foundation/NumberFormatter`` is able to handle units by simply adding a positive and negative suffix
 /// to the number, which is a nice workaround for labels. But if the user shall be able to enter a value into a textfield
@@ -64,15 +64,7 @@ public class UnitFormatter: NumberFormatter {
     ///
     /// If the process fails, `nil` is returned.
     private func number(fromFullString string: String) -> NSNumber? {
-        let numberCharacters = CharacterSet.decimalDigits.union(CharacterSet(charactersIn: ".,\u{066b}"))
-        let numberString = string.compactMap { ch in
-            let charset = CharacterSet(charactersIn: String(ch))
-            if charset.isSubset(of: numberCharacters) {
-                return ch
-            } else {
-                return nil
-            }
-        }
+        let numberString = string.allButNumbersRemoved
         var returnValue: AnyObject?
         super.getObjectValue(&returnValue,
                              for: String(numberString),

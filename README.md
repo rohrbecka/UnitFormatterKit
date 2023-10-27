@@ -1,14 +1,14 @@
 # UnitFormatter
 
-The 'better' NumberFormatter for Apple platforms supporting values with appended units and
-allowing the User to enter values (format string to number) even without or with a 
-wrongly formatted unit string.
+The 'better' NumberFormatter for Apple platforms (UIKit/AppKit and SwiftUI )supporting
+values with appended units and allowing the User to enter values (format string to number) 
+even without or with a wrongly formatted unit string.
 
 
 
 ## Motivation
 
-The NumberFormatter belonging to the Foundation framework is specifically designed to 
+The ``NumberFormatter`` belonging to the Foundation framework is specifically designed to 
 format numerical values into strings and vice versa. It was not intended to add a 
 unit to such strings.
 
@@ -23,15 +23,19 @@ User is forced to provide the exact unit string, which is quite easy for "mm", b
 "°C" or "mv/V / kN" things may become tricky for the user trying to figure out the correct
 suffix.
 
+Additionally, Apple introduced the format styles in iOS 15 and macOS 12 which allow to 
+convert native Swift types (`Double` instead of `NSNumber`) into strings and vice versa.
+These are now also supported by `UnitFormatterKit`.  
+
 
 
 ## Solution
 
-``UnitFormatter`` jumps in here. It's basic feature is, that string-to-number conversion
-is much more tolerant. Independently of the suffix entered by the user, only the remainder
-of the string will be interpreted as a number. So, in scenarios, where the user enters the
-wrong unit. This will simply be ignored by the UnitFormatter and the correct numerical
-value should be returned.
+``UnitFormatter`` and ``UnitFormatStyle`` jump in here. It's basic feature is, that
+string-to-number conversion is much more tolerant. Independently of the suffix entered
+by the user, only the remainder of the string will be interpreted as a number. So, in 
+scenarios, where the user enters the wrong unit this will simply be ignored by the
+``UnitFormatter`` and the ``UnitFormatStyle`` and the correct numerical value should be returned.
 
 In the other direction, where a number is formatted into a string, the unit is just added as
 a suffix.
@@ -43,16 +47,18 @@ Currently, all non-numerical characters (decimal numbers, decimal point characte
 for numerical interpretation. This results in the fact that negative numbers can't be entered.
 Also all suffixes and prefixes and thousands-separators (e.g ')are ignored during formatting.
 
-This shall be fixed by referencing the NumberFormatters behviour. But for the time beeing this
+This shall be fixed by referencing the NumberFormatters behaviour. But for the time being this
 is considered being "good enough".
 
 
 
-## Use of the ``UnitFormatter``
+## Using the Package
+### ``UnitFormatter``
 
 The ``UnitFormatter`` is a subclass of the ``NumberFormatter`` and hence, can be used in 
 every place, where the ``NumberFormatter`` is used. Simply set the `unit` and the
 `paddingString` being used between value and unit and you're done.  
 
-
+### ``UnitFormatStyle``
+ 
 

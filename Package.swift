@@ -23,6 +23,6 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "UnitFormatterKitTests",
-            dependencies: ["UnitFormatterKit"]),
+            dependencies: ["UnitFormatterKit"])
     ]
 )
