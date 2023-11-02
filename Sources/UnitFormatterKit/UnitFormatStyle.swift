@@ -85,13 +85,6 @@ extension Double {
 }
 
 @available(macOS 12, iOS 15, *)
-extension Float16 {
-    public init(_ value: String, format: UnitFormatStyle<Self>) throws {
-        self = try Self.valueFromString(value, format: format)
-    }
-}
-
-@available(macOS 12, iOS 15, *)
 extension Float32 {
     public init(_ value: String, format: UnitFormatStyle<Self>) throws {
         self = try Self.valueFromString(value, format: format)
